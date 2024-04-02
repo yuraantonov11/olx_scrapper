@@ -18,13 +18,13 @@
   "author": {
     "name": "Yurii Antonov",
     "email": "yuraantonov11@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "url": "https://github.com/yuraantonov11"
   },
   "contributors": [
     {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
+      "name": "Yurii Antonov",
+      "email": "yuraantonov11@gmail.com",
+      "url": "https://github.com/yuraantonov11"
     }
   ],
   "main": "./src/main/main.ts",
