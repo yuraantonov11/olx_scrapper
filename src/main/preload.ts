@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { IpcRendererEvent } from 'electron/main';
-// import { productCatalogScraper } from './scrapper.js';
+
 window.electron = require('electron');
 
 const electronHandler = {
@@ -13,9 +13,9 @@ const electronHandler = {
   stopScrapper() {
     ipcRenderer.send('stop-scrapper');
   },
-  sendScraperProgress(creds: any, args: any) {
-    ipcRenderer.send('scraper-progress', creds, args);
-  },
+  // sendScraperProgress(creds: any, args: any) {
+  //   ipcRenderer.send('scraper-progress', creds, args);
+  // },
   onProgress(func: (data: { progress: number; isRunning: boolean }) => void) {
     const subscription = (
       _event: IpcRendererEvent,
@@ -27,7 +27,7 @@ const electronHandler = {
       ipcRenderer.removeListener('scraper-progress', subscription);
     };
   },
-  onEnd(func: (data: { fileName: string;}) => void) {
+  onEnd(func: (data: { fileName: string }) => void) {
     const subscription = (
       _event: IpcRendererEvent,
       data: { fileName: string },
