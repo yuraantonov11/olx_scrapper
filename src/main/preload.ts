@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { IpcRendererEvent } from 'electron/main';
 
+// todo: Fix issue
 window.electron = require('electron');
 
 const electronHandler = {
