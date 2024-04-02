@@ -1,14 +1,9 @@
 {
   "description": "A foundation for scalable desktop apps",
+  "version": "1.0.1",
   "keywords": [
     "electron",
     "boilerplate",
-    "react",
-    "typescript",
-    "ts",
-    "sass",
-    "webpack",
-    "hot",
     "reload"
   ],
   "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
@@ -21,8 +16,8 @@
   },
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
+    "name": "Yurii Antonov",
+    "email": "yuraantonov11@gmail.com",
     "url": "https://electron-react-boilerplate.js.org"
   },
   "contributors": [
@@ -96,12 +91,24 @@
     }
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.11",
+    "@mui/styled-engine": "^5.15.11",
+    "csv-writer": "^1.6.0",
+    "edge-paths": "^2.2.1",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-updater": "^6.1.4",
+    "puppeteer-core": "^22.6.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-recaptcha": "^3.6.8",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "write-excel-file": "^1.4.29",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@electron/notarize": "^2.1.0",
@@ -171,7 +178,7 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
+    "productName": "OLX Scrapper",
     "appId": "org.erb.ElectronReact",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",

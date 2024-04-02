@@ -9,11 +9,16 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import productCatalogScraper from './scrapper';
+
+/**
+ * Add event listeners...
+ */
 
 class AppUpdater {
   constructor() {
@@ -25,10 +30,17 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+ipcMain.on('start-scrapper', async (event, userCreds, config) => {
+  productCatalogScraper.emit('start-scrapper', userCreds, config);
+  productCatalogScraper.on('scraper-progress', (data) => {
+    event.reply('scraper-progress', data);
+  });
+  productCatalogScraper.once('scraper-end', (data) => {
+    event.reply('scraper-end', data);
+  });
+});
+ipcMain.on('stop-scrapper', async (event, userCreds, config) => {
+  productCatalogScraper.emit('stop-scrapper', userCreds, config);
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -39,9 +51,9 @@ if (process.env.NODE_ENV === 'production') {
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
-if (isDebug) {
-  require('electron-debug')();
-}
+// if (isDebug) {
+//   require('electron-debug')();
+// }
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
@@ -83,6 +95,8 @@ const createWindow = async () => {
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
+  // mainWindow.webContents.openDevTools();
+
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -95,6 +109,7 @@ const createWindow = async () => {
   });
 
   mainWindow.on('closed', () => {
+    console.log('mainWindow.on');
     mainWindow = null;
   });
 
@@ -112,11 +127,8 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
-
 app.on('window-all-closed', () => {
+  console.log("app.on('window-all-closed',");
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
