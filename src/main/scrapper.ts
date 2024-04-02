@@ -379,7 +379,7 @@ class ProductCatalog extends EventEmitter {
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-autofill'],
     });
 
-    const [page] = await this.browser.pages();
+    const [page] = await this.browser?.pages();
     await page.setViewport({ width: 1280, height: 640, deviceScaleFactor: 1 });
 
     await page.goto(this.baseUrl);
@@ -426,7 +426,7 @@ class ProductCatalog extends EventEmitter {
     this.isRunning = false; // Mark scraping as finished
 
     // Close the browser
-    await this.browser.close();
+    await this.browser?.close();
 
     await writeToLogFile('Кінець!');
     console.log('Кінець!');
